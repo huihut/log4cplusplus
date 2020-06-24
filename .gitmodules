@@ -1,0 +1,4 @@
+[submodule "log4cplus"]
+	path = log4cplus
+	url = https://github.com/huihut/log4cplus.git
+	branch = dev_huihut

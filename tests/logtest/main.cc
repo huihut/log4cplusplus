@@ -1,10 +1,3 @@
-# log4cplusplus
-
-基于 log4cplus 封装的自用的 C++ 日志库
-
-## 示例
-
-```cpp
 #include "log4cplusplus.h"
 
 int main(int argc, char *argv[])
@@ -23,6 +16,6 @@ int main(int argc, char *argv[])
 
 		log->UnInit();
 	}
+
 	return 0;
 }
-```
