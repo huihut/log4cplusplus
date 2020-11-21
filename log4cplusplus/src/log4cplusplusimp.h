@@ -3,41 +3,53 @@
 
 #include "../include/log4cplusplus.h"
 
+#include <set>
 #include <log4cplus/logger.h>
 #include <log4cplus/initializer.h>
-#include <log4cplus/fileappender.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/property.h>
+#include <log4cplus/hierarchy.h>
 
 namespace log4cplus
 {
 	class Log4CPlusPlusImp final : public Log4CPlusPlus
 	{
-	private:
+	public:
 		Log4CPlusPlusImp();
 		~Log4CPlusPlusImp();
-		Log4CPlusPlusImp(const Log4CPlusPlusImp&) = delete;
-		Log4CPlusPlusImp& operator = (const Log4CPlusPlusImp&) = delete;
-
-	protected:
-		std::wstring GetFullLogFileName(const wchar_t *file_path_base, const wchar_t *file_name);
 
 	public:
-		static Log4CPlusPlusImp* GetInstance();
+		void Release() override;
 
-	public:
-		void Init(const wchar_t *file_path = L"", const wchar_t *file_name = DEFALT_LOG_FILE_NAME) override;
-		void UnInit() override;
-		
-		void EnableDebuggerOutput(bool enable = false) override;
-		void EnableConsoleOutput(bool enable = false) override;
+		void AddFileAppender(
+			const wchar_t *file_path = DEFALT_LOG_FILE_PATH,
+			const wchar_t *file_name = DEFALT_LOG_FILE_NAME,
+			unsigned long max_file_size = DEFALT_MAX_FILE_SIZE,
+			unsigned long max_file_count = DEFALT_MAX_FILE_COUNT,
+			bool is_async = DEFALT_IS_ASYNC
+		) override;
 
-		void WriteLog(Log4CPlusPlusLevel logLevel, const char* file, int line, const char* function, const wchar_t *format, ...) override;
+		void EnableDebuggerAppender(bool enable = false) override;
+		void EnableConsoleAppender(bool enable = false) override;
+
+		const wchar_t * GetLogPath() override;
+
+		void WriteLog(
+			Log4CPlusPlusLevel logLevel,
+			const char* file,
+			int line,
+			const char* function,
+			const wchar_t *format, ...) override;
 
 	private:
-		bool m_isInit;
+		std::wstring GetFullLogFileName(const wchar_t *file_path_base, const wchar_t *file_name);
+		bool FileAppenderPathExist(const std::wstring& path);
+		bool AddFileAppenderPath(const std::wstring& path);
+
+	private:
 		Logger m_logger;
 		std::unique_ptr<Initializer> m_pInitializer;
+		std::unique_ptr<Hierarchy> m_pHierarchy;
+		std::set<std::wstring> m_fileAppenderPath;
+		std::wstring m_log_path;
 	};
 }
 

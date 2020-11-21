@@ -18,4 +18,4 @@ add_library(log4cplusplus SHARED
     log4cplusplusimp.h
 )
 
-target_link_libraries(log4cplusplus debug log4cplusUD optimized log4cplusU)
+target_link_libraries(log4cplusplus debug log4cplusUD Ws2_32 optimized log4cplusU Ws2_32)
