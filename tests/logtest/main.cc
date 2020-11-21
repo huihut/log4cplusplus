@@ -1,4 +1,4 @@
-#include "log4cplusplus.h"
+ï»¿#include "log4cplusplus.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 		LOG4CPLUSPLUS_INFO(log, L"log test %s", L"info");
 		LOG4CPLUSPLUS_WARN(log, L"log test %s %d", L"warn", 123);
 		LOG4CPLUSPLUS_ERROR(log, L"log test %f", 3.14);
-		LOG4CPLUSPLUS_ERROR(log, L"ÖÐÎÄÈÕÖ¾²âÊÔ!!");
+		LOG4CPLUSPLUS_ERROR(log, L"ä¸­æ–‡æ—¥å¿—æµ‹è¯•!!");
 
 		log->Release();
 	}
